@@ -55,12 +55,21 @@ class UserController extends Controller
      */
     public function store(storeRequest $request)
     {
-        $validate = $request->validated();
-
-        $user = User::create($validate);
+        $user = new User();
+        $user->name = $request->name;
+        $user->email = $request->email;
+        $user->password = bcrypt($request->password);
+        $user->status = 'active';
+        $user->save();
+        // attach role default user
         $user->roles()->attach(2);
+        // send verification link
+        $user->sendEmailVerificationNotification();
+        // reset password link
         Password::sendResetLink($request->only(['email']));
-        Mail::to($user->email)->send(new Welcomemail($user));
+        // send welcome mail
+        Mail::to($user->email)->send(new Welcomemail($user,$request->password));
+
         $request->session()->flash('success', 'Created successfully');
 
         return redirect(route('admin.users.index'));
@@ -137,6 +146,7 @@ class UserController extends Controller
 
         User::destroy($id);
         $request->session()->flash('success', 'Deleted successfully');
+
         return redirect(route('admin.users.index'));
     }
 
@@ -155,6 +165,7 @@ class UserController extends Controller
         $request->session()->flash('success', 'Updated successfully');
         $activeCount = User::where('status', 'active')->count();
         $inactiveCount = User::where('status', 'deactive')->count();
+
         return ['message' => 'success','activeCount' => $activeCount, 'inactiveCount' => $inactiveCount];
     }
 }

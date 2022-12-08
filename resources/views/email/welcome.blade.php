@@ -131,7 +131,7 @@ p {
             <div class="card-header">
                 <h4 class="card-title"> Your Login Credentials</h4>
                 <h5 class="card-title">Email : <span id="userId">{{ $user->email}}</span></h5>
-                <h5 class="card-title">Password : <span id="userName">{{ $user->password}}</span></h5>
+                <h5 class="card-title">Password : <span id="userName">{{ $password}}</span></h5>
             </div>
           </div>
         </div>

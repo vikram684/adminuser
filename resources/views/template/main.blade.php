@@ -431,6 +431,7 @@
                 <div class="d-flex">
                     @if (Route::has('login'))
                     @auth
+                    <h6 class="text-light mt-2" style="margin-right: 20px;">Log In As :{{ Auth::user()->name }}</h6>
                     {{-- <a href="{{ url('/home') }}"
                         class="nav-link text-sm text-gray-700 dark:text-gray-500 underline">Home</a>
                     &nbsp;&nbsp;&nbsp; --}}
