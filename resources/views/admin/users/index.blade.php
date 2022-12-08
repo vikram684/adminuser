@@ -116,6 +116,7 @@
                     },
                     success: function(response){
                         if(response.message == 'success'){
+                            swal("Success", "Status Changed!", "success");
                                 $('#activeCount').text(response.activeCount);
                                 $('#inactiveCount').text(response.inactiveCount);
                                 $('#total').text(response.activeCount + response.inactiveCount);
