@@ -11,6 +11,9 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Password;
+use App\Mail\Welcomemail;
+use Illuminate\Support\Facades\Mail;
+
 
 class UserController extends Controller
 {
@@ -57,7 +60,7 @@ class UserController extends Controller
         $user = User::create($validate);
         $user->roles()->attach(2);
         Password::sendResetLink($request->only(['email']));
-
+        Mail::to($user->email)->send(new Welcomemail($user)); 
         $request->session()->flash('success', 'Created successfully');
 
         return redirect(route('admin.users.index'));
