@@ -110,7 +110,7 @@ class UserController extends Controller
 
         if ($request->password != '' && strlen($request->password) >= 8 && strlen($request->password) <= 255) {
             $user->password = bcrypt($request->password);
-        } else {
+        } else if(strlen($request->password) > 0 ){
             $request->session()->flash('error', 'Password must be 8 characters long');
             return redirect(route('admin.users.edit', $id));
         }
