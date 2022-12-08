@@ -22,7 +22,7 @@
     </div>
 
 </div>
-<div class="card">
+<div class="card mb-5">
     <table class="table">
         <thead>
             <tr>
@@ -115,12 +115,10 @@
                         user_id: user_id
                     },
                     success: function(response){
-                        if(response.messaege == 'success'){
-                            if(status == 'active'){
-                                $('#activeCount').text(activeCount);
-                                $('#inactiveCount').text(inactiveCount);
-                                $('#total').text(activeCount + inactiveCount);
-                            }
+                        if(response.message == 'success'){
+                                $('#activeCount').text(response.activeCount);
+                                $('#inactiveCount').text(response.inactiveCount);
+                                $('#total').text(response.activeCount + response.inactiveCount);
                         }
                     }
                 });

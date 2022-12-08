@@ -60,7 +60,7 @@ class UserController extends Controller
         $user = User::create($validate);
         $user->roles()->attach(2);
         Password::sendResetLink($request->only(['email']));
-        Mail::to($user->email)->send(new Welcomemail($user)); 
+        Mail::to($user->email)->send(new Welcomemail($user));
         $request->session()->flash('success', 'Created successfully');
 
         return redirect(route('admin.users.index'));
@@ -153,10 +153,8 @@ class UserController extends Controller
         $user->save();
 
         $request->session()->flash('success', 'Updated successfully');
-        // count of user with status active
         $activeCount = User::where('status', 'active')->count();
-        // count of user with status inactive
         $inactiveCount = User::where('status', 'deactive')->count();
-        return redirect()->route('admin.users.index', ['activeCount' => $activeCount, 'inactiveCount' => $inactiveCount])->with('message', 'success!');
+        return ['message' => 'success','activeCount' => $activeCount, 'inactiveCount' => $inactiveCount];
     }
 }
