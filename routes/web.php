@@ -17,12 +17,12 @@ use App\Http\Controllers\Admin\UserController;
 
 Route::get('/', function () {
     return view('index');
-});
+})->middleware('authStatus');
 
 Auth::routes(['verify' => true]);
 
-// admin
-Route::prefix('admin')->middleware(['auth','verified'])->name('admin.')->group(function(){
+// admin and common user routes
+Route::prefix('admin')->middleware(['auth','verified','authStatus'])->name('admin.')->group(function(){
     Route::resource('/users',UserController::class);
     Route::post('/users/changeStatus', [UserController::class, 'changeStatus'])->name('users.updateStatus');
     Route::get('/users/userDetails', [UserController::class, 'getUserDetails'])->name('users.getUserDetails');

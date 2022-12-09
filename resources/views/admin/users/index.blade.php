@@ -52,6 +52,7 @@
                 <td>
                     <button class='btn btn-sm btn-info text-light viewdetails' data-id='{{ $user->id }}'>View</button>
                     <a class="btn btn-sm btn-primary" href="{{ route('admin.users.edit',$user->id)}}">Edit</a>
+                    @if ($user->roles[0]['name'] == 'User')
                     <button class="btn btn-sm btn-danger" type="button" onclick="event.preventDefault();
                         document.getElementById('delete-user-form-{{$user->id}}').submit()">Delete</button>
                     <form id="delete-user-form-{{ $user->id}}" action="{{ route('admin.users.destroy',$user->id) }}"
@@ -59,6 +60,8 @@
                         @csrf
                         @method('DELETE')
                     </form>
+                    @endif
+
                 </td>
             </tr>
             @endforeach
